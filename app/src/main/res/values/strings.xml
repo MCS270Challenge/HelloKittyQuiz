@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">HelloKittyQuiz</string>
+    <string name="true_button"> True </string>
+    <string name="false_button"> False </string>
+    <string name="next_button"> Next </string>
+    <string name="previous_button"> Previous </string>
+
+    <string name="kitty1"> Hello Kitty boyfriend is called Dear Daniel </string>
+    // True
+    <string name="kitty2"> Hello Kitty has a pet cat named Gross Kitty </string>
+    // False
+    <string name="kitty3"> The Hello Kitty measurements are in pears </string>
+    // False
+    <string name="kitty4"> Hello Kitty did not appear on TV until the late 80s </string>
+    // True
+
+    <string name="correct_toast"> Correct </string>
+    <string name="incorrect_toast"> Incorrect </string>
+    <string name="answered_toast"> You cant answer a question more than once </string>
+
+    <string name="next_contentD"> Go to the next question </string>
+    <string name="previous_contentD"> Go to the previous question </string>
+
+    <string name="warning_text" > Are you sure you want to do this? </string>
+    <string name="show_answer" > Show the answer </string>
+    <string name="answer_text" > Answer </string>
+    <string name= "cheat_button" > Cheat! </string>
+    <string name="judgement_toast" > You are a dirty cheater </string>
+    <string name="judgement_2" > Stop cheating, you already know the answer </string>
+
+
+</resources>
