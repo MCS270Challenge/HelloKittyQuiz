@@ -1,7 +1,7 @@
 
 package com.example.hellokittyquiz
 
-import Question
+import TFQuestion
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -32,15 +32,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var questionTextView: TextView
     private lateinit var previousButton: ImageButton
     private lateinit var cheatButton: Button
-
-
+    private lateinit var a1Button: Button
+    private lateinit var a2Button: Button
+    private lateinit var a3Button: Button
+    private lateinit var a4Button: Button
 
     // load my questions by creating a list of Question objects
     private val QuestionBank = listOf(
-        Question(R.string.kitty1, true),
-        Question(R.string.kitty2, false),
-        Question(R.string.kitty3, false),
-        Question(R.string.kitty4, true)
+        TFQuestion(R.string.kitty1, true),
+        TFQuestion(R.string.kitty2, false),
+        TFQuestion(R.string.kitty3, false),
+        TFQuestion(R.string.kitty4, true)
      )
 
 
@@ -66,7 +68,10 @@ class MainActivity : AppCompatActivity() {
         previousButton=findViewById(R.id.previous_button)
         questionTextView=findViewById(R.id.question_text_view)
         cheatButton=findViewById(R.id.cheat_button)
-
+        a1Button=findViewById(R.id.answer1)
+        a2Button=findViewById(R.id.answer2)
+        //a3Button=findViewById(R.id.answer3)
+        //a4Button=findViewById(R.id.answer4)
 
         fun checkAnswer(userAnswer: Boolean){
             val correctAnswer = quizViewModel.currentQuestionAnswer
@@ -128,15 +133,32 @@ class MainActivity : AppCompatActivity() {
             quizViewModel.isCheater = true
             quizViewModel.cheatQuestion ++
             Toast.makeText(this, R.string.judgement_toast, Toast.LENGTH_LONG).show()
-            val answerIsTrue = quizViewModel.currentQuestionAnswer
-            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            // val answerIsTrue:Boolean? = quizViewModel.currentQuestionAnswer
+            // val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            //fix this later
 
         }
 
 
-
+        fun updateQuestionMC(){
+            setContentView(R.layout.test)
+            a1Button=findViewById(R.id.answer1)
+            a2Button=findViewById(R.id.answer2)
+            a3Button=findViewById(R.id.answer3)
+            a4Button=findViewById(R.id.answer4)
+            val questionTextResId = quizViewModel.currentQuestionText
+            questionTextView.setText(questionTextResId)
+            a1Button.text = quizViewModel.currentQuestion.A1
+            a2Button.text = quizViewModel.currentQuestion.A2
+            a3Button.text = quizViewModel.currentQuestion.A3
+            a4Button.text = quizViewModel.currentQuestion.A4
+        }
 
         fun updateQuestions(){
+            if (quizViewModel.currentQuestionTF){
+                setContentView(R.layout.activity_main)
+            } else updateQuestionMC()
+
             Log.d(TAG, "Checking: updating question text", Exception())
             val questionTextResId = quizViewModel.currentQuestionText
             questionTextView.setText(questionTextResId)
@@ -168,7 +190,7 @@ class MainActivity : AppCompatActivity() {
                 updateQuestions()
 
             }
-
+            setContentView(R.layout.test)
 
         } // increase index counter
 
