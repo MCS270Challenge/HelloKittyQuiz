@@ -7,10 +7,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 
@@ -28,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
+    private lateinit var tfButtonLayout: LinearLayout
     private lateinit var nextButton: ImageButton
     private lateinit var questionTextView: TextView
     private lateinit var previousButton: ImageButton
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var a2Button: Button
     private lateinit var a3Button: Button
     private lateinit var a4Button: Button
+    private lateinit var mcButtonLayout: LinearLayout
 
     // load my questions by creating a list of Question objects
     private val QuestionBank = listOf(
@@ -56,7 +57,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
-        setContentView(R.layout.activity_main)
+        val mainView = R.layout.activity_main
+        setContentView(mainView)
 
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0)?:0
         quizViewModel.currentIndex = currentIndex
@@ -64,14 +66,16 @@ class MainActivity : AppCompatActivity() {
 
         trueButton=findViewById(R.id.true_button)
         falseButton=findViewById(R.id.false_button)
+        tfButtonLayout=findViewById(R.id.tfButtons)
         nextButton=findViewById(R.id.next_button)
         previousButton=findViewById(R.id.previous_button)
         questionTextView=findViewById(R.id.question_text_view)
         cheatButton=findViewById(R.id.cheat_button)
         a1Button=findViewById(R.id.answer1)
         a2Button=findViewById(R.id.answer2)
-        //a3Button=findViewById(R.id.answer3)
-        //a4Button=findViewById(R.id.answer4)
+        a3Button=findViewById(R.id.answer3)
+        a4Button=findViewById(R.id.answer4)
+        mcButtonLayout=findViewById(R.id.mcButtons)
 
         fun checkAnswer(userAnswer: Boolean){
             val correctAnswer = quizViewModel.currentQuestionAnswer
@@ -141,24 +145,24 @@ class MainActivity : AppCompatActivity() {
 
 
         fun updateQuestionMC(){
-            setContentView(R.layout.test)
-            a1Button=findViewById(R.id.answer1)
-            a2Button=findViewById(R.id.answer2)
-            a3Button=findViewById(R.id.answer3)
-            a4Button=findViewById(R.id.answer4)
-            val questionTextResId = quizViewModel.currentQuestionText
-            questionTextView.setText(questionTextResId)
+            //layoutInflater.inflate(R.layout.test, R.layout.activity_main)
+            tfButtonLayout.visibility = View.GONE
+            mcButtonLayout.visibility = View.VISIBLE
             a1Button.text = quizViewModel.currentQuestion.A1
             a2Button.text = quizViewModel.currentQuestion.A2
             a3Button.text = quizViewModel.currentQuestion.A3
             a4Button.text = quizViewModel.currentQuestion.A4
         }
 
+        fun updateQuestionTF(){
+            tfButtonLayout.visibility = View.VISIBLE
+            mcButtonLayout.visibility = View.GONE
+        }
+
         fun updateQuestions(){
             if (quizViewModel.currentQuestionTF){
-                setContentView(R.layout.activity_main)
+                updateQuestionTF()
             } else updateQuestionMC()
-
             Log.d(TAG, "Checking: updating question text", Exception())
             val questionTextResId = quizViewModel.currentQuestionText
             questionTextView.setText(questionTextResId)

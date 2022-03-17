@@ -6,15 +6,17 @@ android:layout_height="match_parent"
 android:gravity="center"
 android:orientation="vertical">
 
-    <!--android:id="@+id/question_text_view"-->
 <TextView
+    android:id="@+id/question_text_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:padding="24dp"
     android:text="@string/kitty1"/>
 
+
 <LinearLayout
+    android:id="@+id/tfButtons"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -35,6 +37,42 @@ android:orientation="vertical">
     </Button>
 
 </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mcButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/answer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/answer1">
+        </Button>
+
+        <Button
+            android:id="@+id/answer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/answer2">
+
+        </Button>
+        <Button
+            android:id="@+id/answer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/answer3">
+        </Button>
+
+        <Button
+            android:id="@+id/answer4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/answer4">
+
+        </Button>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
