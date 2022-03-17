@@ -23,7 +23,9 @@ class QuizViewModel: ViewModel() {
     var correct = 0
     var answered = false
     var finished = false
-    var currentQuestionTF = if (currentQuestion.tfAnswer == null) false else true
+
+    val currentQuestionTF: Boolean
+        get() = currentQuestion.tfAnswer != null
 
     val currentQuestion: MultQuestion
         get() = questionBank[currentIndex]

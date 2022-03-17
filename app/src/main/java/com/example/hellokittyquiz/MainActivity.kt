@@ -148,10 +148,10 @@ class MainActivity : AppCompatActivity() {
             //layoutInflater.inflate(R.layout.test, R.layout.activity_main)
             tfButtonLayout.visibility = View.GONE
             mcButtonLayout.visibility = View.VISIBLE
-            a1Button.text = quizViewModel.currentQuestion.A1
-            a2Button.text = quizViewModel.currentQuestion.A2
-            a3Button.text = quizViewModel.currentQuestion.A3
-            a4Button.text = quizViewModel.currentQuestion.A4
+            a1Button.setText(quizViewModel.currentQuestion.A1)
+            a2Button.setText(quizViewModel.currentQuestion.A2)
+            a3Button.setText(quizViewModel.currentQuestion.A3)
+            a4Button.setText(quizViewModel.currentQuestion.A4)
         }
 
         fun updateQuestionTF(){
@@ -185,16 +185,15 @@ class MainActivity : AppCompatActivity() {
 
             val total = "Your total score is: $finalCorr %"
 
-            if (count == QuestionBank.size){
-                Toast.makeText(this, total, Toast.LENGTH_LONG).show()
+            //if (count == QuestionBank.size){
+                //Toast.makeText(this, total, Toast.LENGTH_LONG).show()
 
-            }
-            else{
+            //}
+            //else {
                 quizViewModel.moveToNext()
                 updateQuestions()
 
-            }
-            setContentView(R.layout.test)
+            //}
 
         } // increase index counter
 
