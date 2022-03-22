@@ -1,16 +1,15 @@
 
 package com.example.hellokittyquiz
 
-import Question
+import TFQuestion
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 
@@ -28,19 +27,23 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
+    private lateinit var tfButtonLayout: LinearLayout
     private lateinit var nextButton: ImageButton
     private lateinit var questionTextView: TextView
     private lateinit var previousButton: ImageButton
     private lateinit var cheatButton: Button
-
-
+    private lateinit var a1Button: Button
+    private lateinit var a2Button: Button
+    private lateinit var a3Button: Button
+    private lateinit var a4Button: Button
+    private lateinit var mcButtonLayout: LinearLayout
 
     // load my questions by creating a list of Question objects
     private val QuestionBank = listOf(
-        Question(R.string.kitty1, true),
-        Question(R.string.kitty2, false),
-        Question(R.string.kitty3, false),
-        Question(R.string.kitty4, true)
+        TFQuestion(R.string.kitty1, true),
+        TFQuestion(R.string.kitty2, false),
+        TFQuestion(R.string.kitty3, false),
+        TFQuestion(R.string.kitty4, true)
      )
 
 
@@ -54,7 +57,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
-        setContentView(R.layout.activity_main)
+        val mainView = R.layout.activity_main
+        setContentView(mainView)
 
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0)?:0
         quizViewModel.currentIndex = currentIndex
@@ -62,11 +66,16 @@ class MainActivity : AppCompatActivity() {
 
         trueButton=findViewById(R.id.true_button)
         falseButton=findViewById(R.id.false_button)
+        tfButtonLayout=findViewById(R.id.tfButtons)
         nextButton=findViewById(R.id.next_button)
         previousButton=findViewById(R.id.previous_button)
         questionTextView=findViewById(R.id.question_text_view)
         cheatButton=findViewById(R.id.cheat_button)
-
+        a1Button=findViewById(R.id.answer1)
+        a2Button=findViewById(R.id.answer2)
+        a3Button=findViewById(R.id.answer3)
+        a4Button=findViewById(R.id.answer4)
+        mcButtonLayout=findViewById(R.id.mcButtons)
 
         fun checkAnswer(userAnswer: Boolean){
             val correctAnswer = quizViewModel.currentQuestionAnswer
@@ -128,15 +137,32 @@ class MainActivity : AppCompatActivity() {
             quizViewModel.isCheater = true
             quizViewModel.cheatQuestion ++
             Toast.makeText(this, R.string.judgement_toast, Toast.LENGTH_LONG).show()
-            val answerIsTrue = quizViewModel.currentQuestionAnswer
-            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            // val answerIsTrue:Boolean? = quizViewModel.currentQuestionAnswer
+            // val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            //fix this later
 
         }
 
 
+        fun updateQuestionMC(){
+            //layoutInflater.inflate(R.layout.test, R.layout.activity_main)
+            tfButtonLayout.visibility = View.GONE
+            mcButtonLayout.visibility = View.VISIBLE
+            a1Button.setText(quizViewModel.currentQuestion.A1)
+            a2Button.setText(quizViewModel.currentQuestion.A2)
+            a3Button.setText(quizViewModel.currentQuestion.A3)
+            a4Button.setText(quizViewModel.currentQuestion.A4)
+        }
 
+        fun updateQuestionTF(){
+            tfButtonLayout.visibility = View.VISIBLE
+            mcButtonLayout.visibility = View.GONE
+        }
 
         fun updateQuestions(){
+            if (quizViewModel.currentQuestionTF){
+                updateQuestionTF()
+            } else updateQuestionMC()
             Log.d(TAG, "Checking: updating question text", Exception())
             val questionTextResId = quizViewModel.currentQuestionText
             questionTextView.setText(questionTextResId)
@@ -159,16 +185,15 @@ class MainActivity : AppCompatActivity() {
 
             val total = "Your total score is: $finalCorr %"
 
-            if (count == QuestionBank.size){
-                Toast.makeText(this, total, Toast.LENGTH_LONG).show()
+            //if (count == QuestionBank.size){
+                //Toast.makeText(this, total, Toast.LENGTH_LONG).show()
 
-            }
-            else{
+            //}
+            //else {
                 quizViewModel.moveToNext()
                 updateQuestions()
 
-            }
-
+            //}
 
         } // increase index counter
 

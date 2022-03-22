@@ -1,16 +1,17 @@
 package com.example.hellokittyquiz
 
-import Question
+import TFQuestion
 import androidx.lifecycle.ViewModel
 
 
 class QuizViewModel: ViewModel() {
     // load my questions by creating a list of Question objects
     private val questionBank = listOf(
-        Question(R.string.kitty1, true),
-        Question(R.string.kitty2, false),
-        Question(R.string.kitty3, false),
-        Question(R.string.kitty4, true)
+        MultQuestion(R.string.kitty1, true),
+        MultQuestion(R.string.kitty2, false),
+        MultQuestion(R.string.kitty3, false),
+        MultQuestion(R.string.kitty4, true),
+        MultQuestion(R.string.testMC, "a", "b", "c", "d", 0)
     )
 
 
@@ -23,12 +24,20 @@ class QuizViewModel: ViewModel() {
     var answered = false
     var finished = false
 
+    val currentQuestionTF: Boolean
+        get() = currentQuestion.tfAnswer != null
 
-    val currentQuestionAnswer: Boolean
-        get() = questionBank[currentIndex].answer
+    val currentQuestion: MultQuestion
+        get() = questionBank[currentIndex]
+
+    val currentQuestionAnswer: Boolean?
+        get() = questionBank[currentIndex].tfAnswer
 
     val currentQuestionText: Int
         get() = questionBank[currentIndex].textReID
+
+    val currentQuestionAnswers: Array<String?>
+        get() = arrayOf(currentQuestion.A1, currentQuestion.A2, currentQuestion.A3, currentQuestion.A4)
 
 
 

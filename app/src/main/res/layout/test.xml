@@ -1,48 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xml:tools = "http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:gravity="center"
-android:orientation="vertical">
-
-<TextView
-    android:id="@+id/question_text_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    xml:tools = "http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:padding="24dp"
-    android:text="@string/kitty1"/>
+    android:orientation="vertical">
 
-
-<LinearLayout
-    android:id="@+id/tfButtons"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <Button
-        android:id="@+id/true_button"
+    <TextView
+        android:id="@+id/question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/true_button">
-    </Button>
-
-    <Button
-        android:id="@+id/false_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/false_button">
-
-    </Button>
-
-</LinearLayout>
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="@string/kitty1"/>
 
     <LinearLayout
-        android:id="@+id/mcButtons"
+        android:id="@+id/mcAnswers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/answer1"
             android:layout_width="wrap_content"
@@ -76,29 +53,31 @@ android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="53dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/previous_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/previous_contentD"
-            android:src="@drawable/arrow_left"></ImageButton>
+            android:src="@drawable/arrow_left"
+            android:contentDescription= "@string/previous_contentD" >
+        </ImageButton>
 
         <Button
             android:id="@+id/cheat_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cheat_button" />
+            android:text = "@string/cheat_button" />
 
 
         <ImageButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/next_contentD"
-            android:src="@drawable/arrow_right"></ImageButton>
+            android:src= "@drawable/arrow_right"
+            android:contentDescription="@string/next_contentD">
+        </ImageButton>
 
 
     </LinearLayout>

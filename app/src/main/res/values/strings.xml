@@ -4,6 +4,10 @@
     <string name="false_button"> False </string>
     <string name="next_button"> Next </string>
     <string name="previous_button"> Previous </string>
+    <string name="answer1"> %1$s </string>
+    <string name="answer2"> %1$s </string>
+    <string name="answer3"> %1$s </string>
+    <string name="answer4"> %1$s </string>
 
     <string name="kitty1"> Hello Kitty boyfriend is called Dear Daniel </string>
     // True
@@ -13,6 +17,7 @@
     // False
     <string name="kitty4"> Hello Kitty did not appear on TV until the late 80s </string>
     // True
+    <string name="testMC"> Which letter is "a"? </string>
 
     <string name="correct_toast"> Correct </string>
     <string name="incorrect_toast"> Incorrect </string>
