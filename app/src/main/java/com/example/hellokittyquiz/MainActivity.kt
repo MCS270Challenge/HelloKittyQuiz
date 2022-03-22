@@ -77,8 +77,11 @@ class MainActivity : AppCompatActivity() {
         a4Button=findViewById(R.id.answer4)
         mcButtonLayout=findViewById(R.id.mcButtons)
 
-        fun checkAnswer(userAnswer: Boolean){
-            val correctAnswer = quizViewModel.currentQuestionAnswer
+
+
+        fun checkAnswer(userAnswerTF: Boolean?, userAnswerMC: Int?){
+            val correctAnswerTF = quizViewModel.currentQuestionAnswerTF
+            val correctAnswerMC = quizViewModel.currentQuestionAnswerMC
 
             if (answered==true){
                 val toast3 = Toast.makeText(this, R.string.answered_toast, Toast.LENGTH_LONG)
@@ -92,22 +95,49 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, R.string.judgement_2, Toast.LENGTH_LONG).show()
                 }
                 else {
-                    if (userAnswer == correctAnswer){
-                        answered = true
-                        correct+=1
-                        val toast1 = Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_LONG)
-                        toast1.setGravity(Gravity.TOP,0,100)
-                        toast1.show()
 
+                    if (userAnswerTF == null) {
+                        if (userAnswerMC == correctAnswerMC){
+                            answered = true
+                            correct+=1
+                            val toast1 = Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_LONG)
+                            toast1.setGravity(Gravity.TOP,0,100)
+                            toast1.show()
+
+                        }
+
+                        else {
+                            answered = true
+                            val toast2 = Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_LONG)
+                            toast2.setGravity(Gravity.TOP,0,100)
+                            toast2.show()
+
+                        }
                     }
 
-                    else {
-                        answered = true
-                        val toast2 = Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_LONG)
-                        toast2.setGravity(Gravity.TOP,0,100)
-                        toast2.show()
 
+
+                    if (userAnswerMC == null) {
+                        if (userAnswerTF == correctAnswerTF){
+                            answered = true
+                            correct+=1
+                            val toast1 = Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_LONG)
+                            toast1.setGravity(Gravity.TOP,0,100)
+                            toast1.show()
+
+                        }
+
+                        else {
+                            answered = true
+                            val toast2 = Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_LONG)
+                            toast2.setGravity(Gravity.TOP,0,100)
+                            toast2.show()
+
+                        }
                     }
+
+
+
                 }
 
             }
@@ -115,19 +145,38 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        a1Button.setOnClickListener {
+            checkAnswer(null, 0)
+        }
+
+        a2Button.setOnClickListener {
+            checkAnswer(null, 1)
+        }
+
+        a3Button.setOnClickListener {
+            checkAnswer(null, 2)
+        }
+
+        a4Button.setOnClickListener {
+            checkAnswer(null, 3)
+        }
+
+
+
         // AP3 Hint: Keep a counter to prevent clicking answers multiple times
         trueButton.setOnClickListener {
 
-                checkAnswer(true)
+                checkAnswer(true, null)
 
         } // do something when you click the true button
 
 
         falseButton.setOnClickListener {
 
-                checkAnswer(false)
+                checkAnswer(false, null)
 
         } // do something when you click the false button
+
 
 
         cheatButton.setOnClickListener {
