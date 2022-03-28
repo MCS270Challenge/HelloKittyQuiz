@@ -10,6 +10,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 
@@ -182,14 +184,25 @@ class MainActivity : AppCompatActivity() {
         cheatButton.setOnClickListener {
             // If I press this button, I will go to the second activity
             // Wrap second activity into an intent
-            startActivityForResult(intent, REQUEST_CODE_CHEAT)
+            //startActivityForResult(intent, REQUEST_CODE_CHEAT)
             quizViewModel.isCheater = true
             quizViewModel.cheatQuestion ++
             Toast.makeText(this, R.string.judgement_toast, Toast.LENGTH_LONG).show()
-            // val answerIsTrue:Boolean? = quizViewModel.currentQuestionAnswer
-            // val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
-            //fix this later
-
+            if (quizViewModel.currentQuestionTF) {
+                val answerIsTrue: Boolean = if (quizViewModel.currentQuestionAnswerTF == true) true else false
+                val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+                getResult.launch(intent) //launch our ActivityResultLauncher
+            } else {
+                val mcAnswer = when (quizViewModel.currentQuestionAnswerMC) {
+                    0 -> 0
+                    1 -> 1
+                    2 -> 2
+                    3 -> 3
+                    else -> -1
+                }
+                val intent = CheatActivity.newIntentMC(this@MainActivity, mcAnswer)
+                getResult.launch(intent) //launch our ActivityResultLauncher
+            }
         }
 
 
@@ -228,21 +241,21 @@ class MainActivity : AppCompatActivity() {
             count += 1
 
             correct.toDouble()
-            val number:Double = 4.0
+            val number:Double = quizViewModel.numberOfQuestions.toDouble()
             val corr = correct/number
             val finalCorr = corr * 100
 
             val total = "Your total score is: $finalCorr %"
 
-            //if (count == QuestionBank.size){
-                //Toast.makeText(this, total, Toast.LENGTH_LONG).show()
+            if (count == quizViewModel.numberOfQuestions){
+                Toast.makeText(this, total, Toast.LENGTH_LONG).show()
 
-            //}
-            //else {
+            }
+            else {
                 quizViewModel.moveToNext()
                 updateQuestions()
 
-            //}
+            }
 
         } // increase index counter
 
@@ -265,16 +278,24 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK){
-            return
-        }
-        if (requestCode == REQUEST_CODE_CHEAT) {
-            quizViewModel.isCheater =
-                data?.getBooleanExtra(EXTRA_ANSWER_IS_SHOWN, false) ?: false
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode != Activity.RESULT_OK){
+//            return
+//        }
+//        if (requestCode == REQUEST_CODE_CHEAT) {
+//            quizViewModel.isCheater =
+//                data?.getBooleanExtra(EXTRA_ANSWER_IS_SHOWN, false) ?: false
+//        }
+        val getResult: ActivityResultLauncher<Intent> =
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    //quizViewModel.setCurrentAnswered()
+                    quizViewModel.isCheater = it.data?.getBooleanExtra(EXTRA_ANSWER_IS_SHOWN, false) ?: false
+                }
+            }
 
 
 

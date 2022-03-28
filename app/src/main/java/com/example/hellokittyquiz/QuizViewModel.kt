@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 class QuizViewModel: ViewModel() {
     // load my questions by creating a list of Question objects
     private val questionBank = listOf(
-        TFQuestion(R.string.kitty1, true, null),
-        TFQuestion(R.string.kitty2, false, null),
-        TFQuestion(R.string.kitty3, false, null),
-        TFQuestion(R.string.kitty4, true, null),
-        TFQuestion(R.string.testMC, null, 0)
+        MultQuestion(R.string.kitty1, true),
+        MultQuestion(R.string.kitty2, false),
+        MultQuestion(R.string.kitty3, false),
+        MultQuestion(R.string.kitty4, true),
+        MultQuestion(R.string.testMC, null, "a", "b", "c" ,"d" , 0)
     )
 
 
@@ -27,17 +27,20 @@ class QuizViewModel: ViewModel() {
     val currentQuestionTF: Boolean
         get() = currentQuestion.tfAnswer != null
 
-    val currentQuestion: TFQuestion
+    val currentQuestion: MultQuestion
         get() = questionBank[currentIndex]
 
     val currentQuestionAnswerTF: Boolean?
         get() = questionBank[currentIndex].tfAnswer
 
     val currentQuestionAnswerMC: Int?
-        get() = questionBank[currentIndex].multAnswer
+        get() = questionBank[currentIndex].mcAnswer
 
     val currentQuestionText: Int
         get() = questionBank[currentIndex].textReID
+
+    val numberOfQuestions : Int
+        get() = questionBank.size
 
     val currentQuestionAnswers: Array<String?>
         get() = arrayOf(currentQuestion.A1, currentQuestion.A2, currentQuestion.A3, currentQuestion.A4)
